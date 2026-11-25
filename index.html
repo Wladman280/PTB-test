@@ -497,7 +497,6 @@
             <label class="category-item" for="cat5"><input type="radio" name="category" value="questions2" id="cat5">5 категория</label>
             <label class="category-item" for="cat6"><input type="radio" name="category" value="category6" id="cat6">6 категория</label>
             <label class="category-item" for="cat7"><input type="radio" name="category" value="questions1" id="cat7">7 категория</label>
-            <label class="category-item" for="cat8"><input type="radio" name="category" value="category8" id="cat8">8 категория</label>
         </div>
         <button class="submit-password" onclick="checkPassword()" id="submitBtn">Отправить</button>
         <p id="message" style="display: none; color: red;">Неправильный пароль</p>
@@ -546,7 +545,6 @@
         <label><input type="checkbox" class="new-key-category" value="questions2"> 5 категория</label>
         <label><input type="checkbox" class="new-key-category" value="category6"> 6 категория</label>
         <label><input type="checkbox" class="new-key-category" value="questions1"> 7 категория</label>
-        <label><input type="checkbox" class="new-key-category" value="category8"> 8 категория</label>
         <p><button type="button" onclick="createAccessKey()" style="padding:10px 18px">Создать ключ</button></p>
         <p id="admin-status" role="status"></p>
         <h3>Ключи доступа</h3>
@@ -706,7 +704,7 @@
         async function loadAccessKeys() {
           const { data, error } = await getSupabase().from("access_keys").select("id,person_name,key_value,expires_at,categories,is_active").order("created_at", {ascending:false});
           if (error) { adminMessage(error.message); return; }
-          const labels = {questionsCategory1:"1 категория",category2:"2 категория",category3:"3 категория",questions:"4 категория",questions2:"5 категория",category6:"6 категория",questions1:"7 категория",category8:"8 категория"};
+          const labels = {questionsCategory1:"1 категория",category2:"2 категория",category3:"3 категория",questions:"4 категория",questions2:"5 категория",category6:"6 категория",questions1:"7 категория"};
           const body = document.getElementById("keys-list"); body.replaceChildren();
           data.forEach(k => {
             const tr = document.createElement("tr");
@@ -721,7 +719,7 @@
 
 
         let questionDbImportPayload = null;
-        const questionDbExpectedCategories = ["questionsCategory1","category2","category3","questions","questions2","category6","questions1","category8"];
+        const questionDbExpectedCategories = ["questionsCategory1","category2","category3","questions","questions2","category6","questions1"];
         function validateQuestionDbPayload(payload) {
           const errors=[]; const cats=payload?.categories;
           if (!cats || typeof cats !== "object" || Array.isArray(cats)) errors.push("В JSON должен быть объект categories.");

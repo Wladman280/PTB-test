@@ -931,7 +931,9 @@ function showResults() {
 @media(max-width:600px){ .quiz-result-actions button{width:100%;} .quiz-results-card{padding:8px;} }
 </style>
 <section class="feedback-area" id="feedback-area" hidden>
-<h2>💬 Обратная связь</h2><button type="button" class="feedback-close" onclick="toggleFeedback(false)" aria-label="Закрыть блок обратной связи">✕ Закрыть</button><p>Оцените тренажёр или напишите, что стоит улучшить.</p>
+<div class="feedback-modal-card" role="dialog" aria-modal="true" aria-labelledby="feedback-title">
+
+<h2 id="feedback-title">💬 Обратная связь</h2><button type="button" class="feedback-close" onclick="toggleFeedback(false)" aria-label="Закрыть блок обратной связи">✕ Закрыть</button><p>Оцените тренажёр или напишите, что стоит улучшить.</p>
 <label for="feedback-rating">Оценка:</label><select id="feedback-rating"><option value="5">⭐⭐⭐⭐⭐ — Отлично</option><option value="4">⭐⭐⭐⭐ — Хорошо</option><option value="3">⭐⭐⭐ — Нормально</option><option value="2">⭐⭐ — Есть проблемы</option><option value="1">⭐ — Не понравилось</option></select>
 <label for="feedback-text">Комментарий (необязательно):</label><textarea id="feedback-text" placeholder="Ваши пожелания, идеи или замечания"></textarea>
 <button type="button" class="submit-password" id="feedback-send">Отправить отзыв</button>
@@ -942,13 +944,20 @@ function showResults() {
   <button type="button" id="feedback-copy">📋 Скопировать текст отзыва</button>
 </div>
 <p id="feedback-status" role="status"></p>
+
+</div>
 </section>
 <script>
 function toggleFeedback(show){
  const panel=document.getElementById('feedback-area'); if(!panel)return;
- panel.hidden = show === undefined ? !panel.hidden : !show;
- if(!panel.hidden){ panel.scrollIntoView({behavior:'smooth',block:'center'}); const t=document.getElementById('feedback-text'); if(t)t.focus({preventScroll:true}); }
+ const shouldShow = show === undefined ? panel.hidden : !!show;
+ panel.hidden = !shouldShow;
+ document.body.classList.toggle('feedback-modal-open', shouldShow);
+ if(shouldShow){ const t=document.getElementById('feedback-text'); if(t)t.focus({preventScroll:true}); }
 }
+
+document.addEventListener('click',function(e){const modal=document.getElementById('feedback-area'); if(modal && !modal.hidden && e.target===modal) toggleFeedback(false);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){const modal=document.getElementById('feedback-area'); if(modal && !modal.hidden) toggleFeedback(false);}});
 function returnToQuizStart(){
  document.getElementById('quiz').style.display='none';
  document.getElementById('quiz-container').style.display='none';
@@ -1009,6 +1018,15 @@ function returnToQuizStart(){
     button, .submit, .submit-password { width:auto; max-width:100%; padding:11px 15px; }
     .quiz-result-actions button { width:100%; }
   }
+
+  /* Feedback form as a modal overlay */
+  #feedback-area.feedback-area { position:fixed !important; inset:0 !important; z-index:10000 !important; width:100vw !important; height:100dvh !important; max-width:none !important; margin:0 !important; padding:20px !important; box-sizing:border-box !important; display:flex !important; align-items:center !important; justify-content:center !important; overflow:auto !important; background:rgba(12,28,45,.62) !important; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); border:0 !important; border-radius:0 !important; box-shadow:none !important; }
+  #feedback-area[hidden] { display:none !important; }
+  .feedback-modal-card { position:relative; width:min(100%,560px); max-height:calc(100dvh - 40px); overflow-y:auto; overscroll-behavior:contain; padding:clamp(18px,4vw,28px); box-sizing:border-box; border-radius:22px; background:#fff; color:#172b3e; box-shadow:0 24px 70px rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.7); }
+  .feedback-modal-card h2 { margin:0 0 12px; }
+  .feedback-modal-card .feedback-close { float:right; margin:0 0 12px 12px; min-height:42px; }
+  body.feedback-modal-open { overflow:hidden; }
+  @media(max-width:600px){ #feedback-area.feedback-area { padding:12px !important; } .feedback-modal-card { max-height:calc(100dvh - 24px); border-radius:18px; padding:16px; } }
 </style>
 
 </body>

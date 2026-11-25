@@ -766,8 +766,13 @@ async function displayQuiz(selectedQuestions) {
     document.body.classList.remove("answer-correct", "answer-incorrect");
     document.body.classList.add("quiz-neutral");
     const counter = document.createElement("div");
+    counter.className = "quiz-progress-label";
     counter.textContent = `Вопрос ${currentQuestionIndex + 1} из ${selectedQuestions.length}`;
     container.appendChild(counter);
+    const progress = document.createElement("div"); progress.className = "quiz-progress-track";
+    const progressFill = document.createElement("div"); progressFill.className = "quiz-progress-fill";
+    progressFill.style.width = `${Math.min(100, currentQuestionIndex / Math.max(1, selectedQuestions.length) * 100)}%`;
+    progress.appendChild(progressFill); container.appendChild(progress);
     if (currentQuestionIndex >= selectedQuestions.length) { showResults(); return; }
     const q = selectedQuestions[currentQuestionIndex];
     const questionElement = document.createElement("div");
@@ -780,6 +785,18 @@ async function displayQuiz(selectedQuestions) {
       label.appendChild(input); label.appendChild(document.createTextNode(" " + answer)); questionElement.appendChild(label);
     });
     container.appendChild(questionElement);
+    const reportButton = document.createElement("button"); reportButton.type = "button";
+    reportButton.className = "question-report-button"; reportButton.textContent = "⚠️ Сообщить об ошибке в вопросе";
+    reportButton.addEventListener("click", () => {
+      const subject = encodeURIComponent("Сообщение об ошибке в вопросе тренажёра");
+      const body = encodeURIComponent(`Категория: ${activeQuizCategory || "не указана"}
+Вопрос ${currentQuestionIndex + 1}: ${q.question}
+
+Что не так (можно дополнить):
+`);
+      window.location.href = `mailto:wlad280@mail.ru?subject=${subject}&body=${body}`;
+    });
+    container.appendChild(reportButton);
     const inputs = [...questionElement.querySelectorAll('input[name="answer"]')];
     let answered = false;
     const submitAnswer = async (selected) => {
@@ -818,22 +835,39 @@ function escapeQuizText(value) { const div=document.createElement("div"); div.te
 
 function showResults() {
     const container = document.getElementById("quiz-container");
-    container.innerHTML = ""; // Очистить контейнер
-
-    // Выводим количество неправильных ответов
-    const resultsMessage = document.createElement("div");
-    resultsMessage.innerHTML = `<h1>Результаты теста</h1>`;
-    if (incorrectAnswers.length > 0) {
-        resultsMessage.innerHTML += `<p>Количество неправильных ответов: ${incorrectAnswers.length}</p>`;
-        incorrectAnswers.forEach(incorrect => {
-            resultsMessage.innerHTML += `<br> <br>Вопрос: ${incorrect.question}.<br> 
-           Ваши ответы: <span style="color: #ff2020;font-weight:700;">${incorrect.selected}</span>.<br> 
-           Правильные ответы: <span style="color: #00a832;font-weight:700;">${incorrect.correct}</span>.`;
-        });
+    container.innerHTML = "";
+    document.body.classList.remove("answer-correct", "answer-incorrect");
+    document.body.classList.add("quiz-neutral");
+    const total = userAnswers.filter(a => a !== undefined).length;
+    const wrong = incorrectAnswers.length;
+    const correctCount = Math.max(0, total - wrong);
+    const percent = total ? Math.round(correctCount / total * 100) : 0;
+    const resultsMessage = document.createElement("div"); resultsMessage.className = "quiz-results-card";
+    resultsMessage.innerHTML = `<h1>Результаты теста</h1><div class="quiz-score">${percent}%</div><p><strong>Правильных ответов:</strong> ${correctCount} из ${total}</p><p><strong>Ошибок:</strong> ${wrong}</p>`;
+    if (wrong > 0) {
+      const list = document.createElement("div"); list.className = "quiz-mistakes";
+      const heading = document.createElement("h2"); heading.textContent = "Разбор ошибок"; list.appendChild(heading);
+      incorrectAnswers.forEach((item, index) => {
+        const card = document.createElement("div"); card.className = "quiz-mistake-item";
+        const q = document.createElement("p"); q.innerHTML = `<strong>${index + 1}. Вопрос:</strong> ${escapeQuizText(item.question)}`;
+        const your = document.createElement("p"); your.innerHTML = `<span class="quiz-your-answer">Ваш ответ:</span> ${escapeQuizText((item.selected || []).join("; "))}`;
+        const right = document.createElement("p"); right.innerHTML = `<span class="quiz-correct-answer">Правильный ответ:</span> ${escapeQuizText((item.correct || []).join("; "))}`;
+        card.append(q,your,right); list.appendChild(card);
+      }); resultsMessage.appendChild(list);
     } else {
-        resultsMessage.innerHTML += `<p>Поздравляем! У вас нет неправильных ответов.</p>`;
+      const congrat = document.createElement("p"); congrat.className = "quiz-congratulations"; congrat.textContent = "Отлично! Все ответы правильные — так держать!"; resultsMessage.appendChild(congrat);
     }
-    container.appendChild(resultsMessage); // Добавить результаты в контейнер
+    const actions = document.createElement("div"); actions.className = "quiz-result-actions";
+    const share = document.createElement("button"); share.className = "submit-password"; share.type = "button"; share.textContent = "📤 Поделиться результатом";
+    share.addEventListener("click", async () => {
+      const shareText = `Я прошёл тест «Транспортная безопасность»: ${percent}% (${correctCount}/${total} правильных). Попробуй тоже!`;
+      if (navigator.share) { try { await navigator.share({title:"Результат теста", text:shareText, url:location.href}); } catch(e) {} }
+      else if (navigator.clipboard) { try { await navigator.clipboard.writeText(shareText + " " + location.href); share.textContent = "Скопировано!"; } catch(e) { prompt("Скопируйте текст результата:", shareText + " " + location.href); } }
+      else prompt("Скопируйте текст результата:", shareText + " " + location.href);
+    });
+    const home = document.createElement("button"); home.className = "submit-password"; home.type = "button"; home.textContent = "↩ Вернуться к выбору теста";
+    home.addEventListener("click", () => { document.getElementById("quiz").style.display="none"; const pc=document.querySelector(".password-container"); if(pc)pc.style.display=""; document.body.classList.remove("quiz-neutral"); });
+    actions.append(share,home); resultsMessage.appendChild(actions); container.appendChild(resultsMessage);
 }
 
 
@@ -877,5 +911,34 @@ function showResults() {
     <span>Учебный тренажёр</span>
     <a class="developer-contact" href="mailto:wlad280@mail.ru">📧 Написать разработчику</a>
 </footer>
+
+<style>
+.quiz-progress-label { margin: 8px 0; font-weight: 700; }
+.quiz-progress-track { height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin: 8px 0 18px; }
+.quiz-progress-fill { height: 100%; background: linear-gradient(90deg,#1e88e5,#18a86b); border-radius:99px; transition:width .25s; }
+.question-report-button { display:block; margin:18px auto 0; background:#fff3cd; color:#795500; border:1px solid #e8cf77; border-radius:9px; padding:10px 14px; cursor:pointer; font-weight:600; }
+.quiz-results-card { max-width:850px; margin:0 auto; padding:16px; }
+.quiz-score { font-size:clamp(2.5rem,8vw,4rem); font-weight:800; color:#16834b; text-align:center; margin:8px 0; }
+.quiz-mistakes h2 { margin-top:24px; }
+.quiz-mistake-item { background:rgba(255,255,255,.75); border:1px solid #d8e0e8; border-radius:10px; padding:12px; margin:12px 0; }
+.quiz-your-answer { color:#c62828; font-weight:700; } .quiz-correct-answer { color:#16834b; font-weight:700; }
+.quiz-result-actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:22px 0 8px; }
+.quiz-congratulations { padding:14px; background:#e7f7ed; border-radius:10px; color:#176b3b; font-weight:700; }
+.feedback-area { max-width:720px; margin:28px auto 10px; padding:18px; border:1px solid #dce4ec; border-radius:14px; background:rgba(255,255,255,.7); text-align:left; }
+.feedback-area h2 { margin-top:0; } .feedback-area label { display:block; margin:8px 0; }
+.feedback-area textarea { width:100%; box-sizing:border-box; min-height:100px; padding:10px; border-radius:8px; border:1px solid #cbd5e1; font:inherit; }
+.feedback-area select { padding:8px; border-radius:8px; } .feedback-area button { margin-top:10px; }
+@media(max-width:600px){ .quiz-result-actions button{width:100%;} .quiz-results-card{padding:8px;} }
+</style>
+<section class="feedback-area" id="feedback-area">
+<h2>💬 Обратная связь</h2><p>Оцените тренажёр или напишите, что стоит улучшить.</p>
+<label for="feedback-rating">Оценка:</label><select id="feedback-rating"><option value="5">⭐⭐⭐⭐⭐ — Отлично</option><option value="4">⭐⭐⭐⭐ — Хорошо</option><option value="3">⭐⭐⭐ — Нормально</option><option value="2">⭐⭐ — Есть проблемы</option><option value="1">⭐ — Не понравилось</option></select>
+<label for="feedback-text">Комментарий (необязательно):</label><textarea id="feedback-text" placeholder="Ваши пожелания, идеи или замечания"></textarea>
+<button type="button" class="submit-password" id="feedback-send">Отправить отзыв</button><p id="feedback-status" role="status"></p>
+</section>
+<script>
+(function(){ const button=document.getElementById('feedback-send'); if(!button)return; button.addEventListener('click',()=>{ const rating=document.getElementById('feedback-rating').value; const comment=document.getElementById('feedback-text').value.trim(); const subject=encodeURIComponent('Отзыв о тренажёре «Транспортная безопасность»'); const body=encodeURIComponent(`Оценка: ${rating}/5\nКомментарий: ${comment || '(без комментария)'}\nДата: ${new Date().toLocaleString('ru-RU')}\nСтраница: ${location.href}`); document.getElementById('feedback-status').textContent='Откроется почтовое приложение, чтобы отправить отзыв разработчику.'; location.href=`mailto:wlad280@mail.ru?subject=${subject}&body=${body}`; }); })();
+</script>
+
 </body>
 </html>

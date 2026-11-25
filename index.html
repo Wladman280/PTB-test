@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="description" content="Учебный тренажёр по транспортной безопасности морского и водного транспорта.">
+    <meta name="theme-color" content="#123654">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Транспортная безопасность">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+    <title>Учебный тренажёр по транспортной безопасности морского и водного транспорта</title>
+    <style>
+            body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            padding: 10px;
+            box-sizing: border-box;            
+            background: linear-gradient(200deg, #00aaff, #000000);
+            
+        }
+        
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #343a40;
+            color: #fff;
+            border-radius: 5px
+        }
+        
+        h1 {
+        font-size: 24px; /* Размер шрифта заголовка #f8f9fa; */
+        text-align: center;; /* Центрирование- слева текста */
+        margin-bottom: 20px; /* Отступ снизу */
+
+    }
+        h2 {
+        font-size: 24px; /* Размер шрифта заголовка #f8f9fa; */
+        text-align: left;; /* Центрирование- слева текста */
+        margin-bottom: 20px; /* Отступ снизу */
+        color: #328d05;
+    }
+        
+        p {
+            text-align: left;
+            color: red
+        }
+        a {
+             color: #fff;
+        }
+              
+        .password-container {
+        max-width: 400px; /* Максимальная ширина контейнера */
+        margin: 80px  auto 10px; /* Центрирование контейнера по горизонтали */
+        padding: 20px; /* Внутренние отступы */
+        border: 1px solid #ccc; /* Рамка вокруг контейнера */
+        border-radius: 10px; /* Скругление углов */
+        background-color: #f9f9f9; /* Цвет фона контейнера */
+        display: flex; /* Использование флексбокса для упрощения компоновки */
+        flex-direction: column; /* Расположение элементов по колонкам */
+        align-items: center; /* Центрирование элементов по горизонтали */
+    }
+    .radio-group {
+        display: flex; 
+          gap: 10px; /* Пробел между элементами */
+        margin: 10px 0; /* Отступ сверху и снизу */
+    }
+
+    .radio-group label {
+        display: flex; /* Гибкий контейнер для лейблов */
+        align-items: center; /* По вертикали по центру */
+    }
+        .quiz-container{
+            width: 80%;
+            max-width: 800px;
+            height: 70vh;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+            overflow: auto;
+            position: relative;
+            display: none
+        }
+ 
+     
+        .submit-password {
+        background-color: #4CAF50; /* Цвет кнопки */
+        color: white; /* Цвет текста на кнопке */
+        padding: 10px 20px; /* Внутренние отступы кнопки */
+        border: none; /* Без рамки */
+        border-radius: 5px; /* Скругление углов кнопки */
+        cursor: pointer; /* Курсор при наведении */
+        margin: 20px auto;
+    }
+        
+        .submit-password:hover {
+            background-color: #0056b3
+        }
+        
+        .question {
+            margin-bottom: 15px;
+            font-weight: 700;
+            color: #495057
+        }
+        
+        .answers {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-left: 0;
+            padding-left: 0;
+            line-height: 1.5;
+            flex-direction: column
+        }
+        
+        .answer {
+            position: relative;
+            margin-top: 0
+        }
+        
+.answer-option {
+    margin-bottom: 3px; /* Измените значение по желанию */
+    display: block; /* Это поможет сделать каждую метку блочным элементом */
+}
+
+        .submit {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            display: none
+        }
+   
+        .submit:hover {
+            background-color: #0056b3
+        }
+        
+        input[type=checkbox],
+        input[type=radio] {
+            margin-right: 10px
+        }
+    /* Стили для поля ввода пароля */
+    input[type="password"] {
+        width: 100%; /* Поле ввода растягивается на всю ширину контейнера */
+        padding: 10px; /* Внутренние отступы */
+        margin-bottom: 20px; /* Отступ снизу */
+        border: 1px solid #ccc; /* Рамка поля ввода */
+        border-radius: 5px; /* Скругление углов поля ввода */
+    }
+        
+        .logo {
+        width: 100%; /* Логотип растягивается на всю ширину контейнера */
+        max-width: 150px; /* Максимальная ширина логотипа */
+        height: auto; /* Автоматическое сохранение пропорций */
+        margin-bottom: 0px; /* Отступ снизу */
+        border-radius: 40px 40px 90px 90px;
+    }
+        
+        .logo:hover {
+            transform: scale(1.05)
+        }
+    /* Стили для сообщения */
+    #message {
+        color: red; /* Цвет текста сообщения */
+        margin-top: 20px; /* Отступ над сообщением */
+        text-align: center; /* Центрирование текста сообщения */
+    }
+        .animated-text {        
+            font-size: 24px; /* Размер шрифта заголовка #f8f9fa; */
+            text-align: center;; /* Центрирование- слева текста */
+            margin-bottom: 20px; /* Отступ снизу */
+            font-weight: bold;
+            background: linear-gradient(270deg, #001f3f, #2c39d9, #2c86bb, #ff8000, #9d8959, #9b7777, #001f3f);
+            background-size: 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradient-animation 10s ease infinite;
+        }
+       
+
+
+        @keyframes gradient-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+        
+        @media (max-width:768px) {
+            body {
+                font-size: 14px;
+                padding: 10px
+            }
+            .quiz-container {
+                width: 90%;
+                padding: px
+            }
+            label{
+             font-size: 12px
+            }
+            h1 {
+                font-size: 18px;
+                margin: 0 50px
+            } // Уменьшает отступы 
+
+            .animated-text{
+                font-size: 18px;
+                margin: 0 50px
+             }
+
+	 h2 {
+                font-size: 20px;
+                margin: 0 0px} 
+	.logo{width:25%;max-width:80px}p{font-size:12px}
+	.question{font-size:16px}.submit{font-size:14px}
+	.answers{flex-direction:column}}
+
+	@media (max-width:480px){
+	h1{font-size:14px;margin:0 30px}
+	
+	  h2 {
+                font-size: 14px;
+                margin: 0 0 10px} 
+
+           .animated-text{
+                font-size: 14px;
+                margin: 0 0 0px
+             }
+.answer-option {
+    margin-bottom: 1px; /* Измените значение по желанию */
+    display: block; /* Это поможет сделать каждую метку блочным элементом */
+}
+	.logo{width:50%;max-width:60px}}
+
+        .category-list{display:flex;flex-direction:column;align-items:stretch;gap:8px;width:100%;margin:14px 0}
+        .category-item{display:flex;align-items:center;gap:10px;width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid #d0d7de;border-radius:7px;background:#fff;color:#222;cursor:pointer;font-size:16px}
+        .category-item input{margin:0}
+        body.answer-correct{background:#39e75f!important;transition:background-color .2s ease}
+        body.answer-incorrect{background:#ff4545!important;transition:background-color .2s ease}
+        body.quiz-neutral{background:linear-gradient(200deg,#00aaff,#000)}
+
+    
+        /* Адаптация для телефонов, планшетов и широких экранов */
+        *, *::before, *::after { box-sizing: border-box; }
+        html { min-width: 320px; -webkit-text-size-adjust: 100%; }
+        body {
+            width: 100%;
+            min-height: 100vh;
+            min-height: 100dvh;
+            padding: clamp(8px, 2vw, 20px);
+            overflow-x: hidden;
+        }
+        .password-container {
+            width: min(100%, 620px);
+            margin: clamp(12px, 4vh, 48px) auto 16px;
+            padding: clamp(14px, 3vw, 28px);
+        }
+        .animated-text {
+            font-size: clamp(18px, 2.5vw, 28px);
+            line-height: 1.35;
+            overflow-wrap: anywhere;
+        }
+        .logo { display: block; max-width: min(150px, 42vw); }
+        .password-container input[type="password"] {
+            width: 100%;
+            min-height: 46px;
+            font-size: 16px;
+        }
+        .category-list { width: 100%; }
+        .category-item {
+            min-height: 46px;
+            padding: 11px 13px;
+            font-size: clamp(14px, 1.8vw, 17px);
+            line-height: 1.35;
+        }
+        .category-item input,
+        input[type="checkbox"], input[type="radio"] {
+            flex: 0 0 auto;
+            width: 18px;
+            height: 18px;
+        }
+        .quiz-container {
+            width: min(100%, 1000px);
+            max-width: 1000px;
+            height: auto;
+            min-height: 55vh;
+            min-height: 55dvh;
+            max-height: none;
+            margin: clamp(10px, 2vh, 22px) auto;
+            padding: clamp(14px, 3vw, 28px);
+            overflow: visible;
+            overflow-wrap: anywhere;
+        }
+        .quiz-container h1 { font-size: clamp(22px, 3vw, 30px); line-height: 1.25; }
+        .quiz-container h2 {
+            font-size: clamp(18px, 2.4vw, 26px);
+            line-height: 1.4;
+            margin: 0 0 18px;
+            overflow-wrap: anywhere;
+        }
+        .quiz-container p, .quiz-container div, .quiz-container label {
+            font-size: clamp(15px, 1.8vw, 18px);
+            line-height: 1.55;
+        }
+        .answer-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 9px;
+            margin: 0 0 10px;
+            padding: 7px 4px;
+            cursor: pointer;
+        }
+        .answer-option input { margin: 3px 2px 0 0; }
+        .submit, .submit-password, .quiz-container button {
+            min-height: 44px;
+            max-width: 100%;
+            padding: 11px 20px;
+            font-size: 16px;
+            touch-action: manipulation;
+        }
+        footer { width: 100%; line-height: 1.5; overflow-wrap: anywhere; }
+        @media (max-width: 768px) {
+            main { align-items: flex-start; }
+            .password-container { margin-top: 12px; }
+            .quiz-container { min-height: 0; }
+            h1 { font-size: clamp(20px, 4vw, 26px); margin: 0 0 16px; }
+            h2 { font-size: clamp(18px, 3.5vw, 24px); }
+            .animated-text { margin: 0 0 16px; }
+            .logo { width: auto; max-width: 100px; }
+            .question { font-size: 17px; }
+            .answers { gap: 8px; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 7px; }
+            .password-container { padding: 13px; border-radius: 9px; }
+            .animated-text { font-size: 18px; }
+            .logo { max-width: 76px; }
+            .category-item { padding: 10px; font-size: 14px; }
+            .quiz-container { padding: 13px; border-radius: 8px; }
+            .quiz-container h2 { font-size: 19px; margin-bottom: 14px; }
+            .quiz-container p, .quiz-container div, .quiz-container label {
+                font-size: 15px;
+            }
+            .answer-option { gap: 7px; padding: 8px 2px; }
+            footer { padding: 9px 6px; font-size: 13px; }
+        }
+        @media (min-width: 1200px) {
+            .quiz-container { padding: 30px 36px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+
+    
+        /* Финальная настройка читаемости вопроса и вариантов ответа */
+        .password-container > img.logo {
+            width: clamp(88px, 15vw, 132px);
+            max-width: 132px;
+            height: auto;
+            margin: 0 auto 12px;
+            object-fit: contain;
+            border-radius: 0;
+        }
+        .quiz-container {
+            width: min(100%, 820px);
+            padding: clamp(16px, 3vw, 30px);
+            height: auto;
+            min-height: 0;
+            overflow: visible;
+        }
+        #quiz-container > div:first-child {
+            color: #526273;
+            font-size: 15px;
+            font-weight: 700;
+            line-height: 1.35;
+            margin: 0 0 12px;
+        }
+        #quiz-container h2 {
+            color: #173b61;
+            font-size: clamp(19px, 2.2vw, 25px);
+            font-weight: 700;
+            line-height: 1.38;
+            margin: 0 0 20px;
+            text-align: left;
+            overflow-wrap: break-word;
+        }
+        #quiz-container .answer-option {
+            display: flex;
+            align-items: flex-start;
+            gap: 11px;
+            width: 100%;
+            margin: 0 0 9px;
+            padding: 12px 13px;
+            border: 1px solid #d5e0ea;
+            border-radius: 10px;
+            background: #fff;
+            color: #172b3e;
+            font-size: clamp(15px, 1.6vw, 18px);
+            font-weight: 400;
+            line-height: 1.45;
+            overflow-wrap: anywhere;
+        }
+        #quiz-container .answer-option input {
+            flex: 0 0 auto;
+            width: 20px;
+            height: 20px;
+            margin: 2px 0 0;
+            accent-color: #087bdc;
+        }
+        #quiz-container .answer-option:has(input:checked) {
+            border-color: #1683df;
+            background: #eef7ff;
+        }
+        .site-footer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            width: 100%;
+            margin-top: 14px;
+            padding: 13px 10px;
+            color: #eaf5ff;
+            background: rgba(18, 35, 52, .88);
+            border-radius: 10px;
+            text-align: center;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        .footer-brand {
+            font-weight: 800;
+            letter-spacing: .08em;
+            font-size: 12px;
+        }
+        @media (max-width: 600px) {
+            .quiz-container { width: 100%; padding: 14px; }
+            #quiz-container h2 { font-size: 19px; line-height: 1.38; }
+            #quiz-container .answer-option { font-size: 15px; padding: 11px; }
+        }
+
+    
+        #admin-panel { box-sizing: border-box; width: min( calc(100% - 20px), 760px ); }
+        #admin-panel input, #admin-panel button { max-width: 100%; box-sizing: border-box; }
+        #admin-panel label { display: inline-block; margin: 4px 8px 4px 0; }
+        .developer-contact { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+        .developer-contact:hover { color: #bfe3ff; }
+
+    
+        #home-admin-controls { display: block; }
+        #home-admin-controls #admin-panel { position: static; }
+
+    </style>
+</head>
+<body>
+    
+    <div class="password-container" id="password-container">
+    <button type="button" class="admin-mini" onclick="toggleAdminPanel()" aria-label="Вход администратора" title="Вход администратора">⚙</button>
+    <div class="animated-text">Учебный тренажёр по транспортной безопасности морского и водного транспорта</div>
+    <img src="data:image/webp;base64,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" alt="Логотип тренажёра транспортной безопасности" alt="Логотип" class="logo">
+        <p style="margin:8px 0;color:#1769aa;font-weight:600">Пробное тестирование: код 123 доступен 5 запусков. В каждом — 5 одинаковых вопросов.</p>
+        <p>Введите пароль, выберите категорию:</p>
+        <input type="password" id="password" placeholder="Введите пароль">
+        <div class="category-list" role="radiogroup" aria-label="Выбор категории">
+            <label class="category-item" for="cat1"><input type="radio" name="category" value="questionsCategory1" id="cat1">1 категория</label>
+            <label class="category-item" for="cat2"><input type="radio" name="category" value="category2" id="cat2">2 категория</label>
+            <label class="category-item" for="cat3"><input type="radio" name="category" value="category3" id="cat3">3 категория</label>
+            <label class="category-item" for="cat4"><input type="radio" name="category" value="questions" id="cat4">4 категория</label>
+            <label class="category-item" for="cat5"><input type="radio" name="category" value="questions2" id="cat5">5 категория</label>
+            <label class="category-item" for="cat6"><input type="radio" name="category" value="category6" id="cat6">6 категория</label>
+            <label class="category-item" for="cat7"><input type="radio" name="category" value="questions1" id="cat7">7 категория</label>
+        </div>
+        <button class="submit-password" onclick="checkPassword()" id="submitBtn">Отправить</button>
+        <p id="message" style="display: none; color: red;">Неправильный пароль</p>
+        <p id="categoryMessage" style="display: none; color: red;">Выберите категорию</p>
+    </div>
+<div id="home-admin-controls">
+<!-- Кнопки перенесены в единый блок app-bottom-actions для единого стиля -->
+    <section id="admin-panel" style="display:none;max-width:760px;margin:18px auto;padding:18px;background:#fff;color:#222;border-radius:10px;box-shadow:0 3px 14px #0002">
+      <h2>Панель администратора</h2>
+      <div id="admin-login">
+        <p>Войдите в панель администратора.</p>
+        <input id="admin-email" type="email" placeholder="Email администратора" style="padding:10px;width:min(90%,320px);margin:5px">
+        <input id="admin-password" type="password" placeholder="Пароль администратора" style="padding:10px;width:min(90%,320px);margin:5px">
+        <button type="button" onclick="adminSignIn()" style="padding:10px 18px;margin:5px">Войти</button>
+      </div>
+      <div id="admin-workspace" style="display:none">
+        <button type="button" onclick="adminSignOut()">Выйти из панели</button>
+        <section style="margin:16px 0;padding:14px;background:#eef5ff;border-radius:8px">
+          <h3 style="margin:0 0 8px">Посещаемость сайта</h3>
+          <p style="margin:0">Уникальных посетителей: <strong id="site-visit-count">—</strong></p>
+          <button type="button" onclick="loadSiteVisitCount()" style="margin-top:8px">Обновить счётчик</button>
+        </section>
+        <section id="question-db-admin" style="margin:18px 0;padding:16px;border:1px solid #b8c9df;border-radius:10px;background:#f7faff;color:#172033">
+          <h3 style="margin-top:0">Управление базой вопросов</h3>
+          <p>Загрузи полный JSON базы. Перед заменой файл будет проверен; текущая база заменится целиком только при успешном импорте.</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
+            <input id="question-db-file" type="file" accept=".json,application/json" />
+            <button type="button" onclick="previewQuestionDb()">Проверить файл</button>
+            <button type="button" onclick="exportQuestionDb()">Скачать текущую базу</button>
+          </div>
+          <div id="question-db-preview" role="status" style="margin-top:12px;white-space:pre-wrap"></div>
+          <button id="question-db-import-btn" type="button" onclick="importQuestionDb()" disabled style="margin-top:10px;background:#1769aa;color:white;padding:10px 16px;border:0;border-radius:6px">Заменить базу вопросами из файла</button>
+          <p style="font-size:13px;color:#5b6472">Импорт заменяет все категории и вопросы. Скачай резервную копию перед заменой. Правильные ответы доступны только администраторам и серверной проверке.</p>
+        </section>
+        <h3>Создать персональный ключ</h3>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:9px">
+          <input id="new-key-person" placeholder="ФИО / имя сотрудника" style="padding:10px">
+          <input id="new-key-value" placeholder="Ключ (или оставьте пустым для генерации)" style="padding:10px">
+          <input id="new-key-expiry" type="datetime-local" style="padding:10px">
+        </div>
+        <p>Разрешенные разделы:</p>
+        <label><input type="checkbox" class="new-key-category" value="questionsCategory1"> 1 категория</label>
+        <label><input type="checkbox" class="new-key-category" value="category2"> 2 категория</label>
+        <label><input type="checkbox" class="new-key-category" value="category3"> 3 категория</label>
+        <label><input type="checkbox" class="new-key-category" value="questions"> 4 категория</label>
+        <label><input type="checkbox" class="new-key-category" value="questions2"> 5 категория</label>
+        <label><input type="checkbox" class="new-key-category" value="category6"> 6 категория</label>
+        <label><input type="checkbox" class="new-key-category" value="questions1"> 7 категория</label>
+        <p><button type="button" onclick="createAccessKey()" style="padding:10px 18px">Создать ключ</button></p>
+        <p id="admin-status" role="status"></p>
+        <h3>Ключи доступа</h3>
+        <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse" border="1" cellpadding="7"><thead><tr><th>Сотрудник</th><th>Ключ</th><th>Срок действия</th><th>Разделы</th><th>Статус</th><th>Устройство</th><th>Действие</th></tr></thead><tbody id="keys-list"></tbody></table></div>
+      </div>
+    </section>
+</div>
+<div class="app-bottom-actions" id="home-bottom-actions">
+  <button type="button" class="app-action-btn share-app-btn" onclick="shareApp()">📤 Поделиться приложением</button>
+  <a class="app-action-btn telegram-btn" href="https://t.me/Test_PTB" target="_blank" rel="noopener noreferrer">✈️ Мы в Telegram</a>
+  <button type="button" class="app-action-btn feedback-trigger" onclick="toggleFeedback(true)">💬 Обратная связь</button>
+</div>
+
+    <div id="quiz" style="display: none;"></div>
+    <div class="quiz-container"  id="quiz-container" style="display: none;">   </div>
+    <div id="quiz-action-controls" class="quiz-action-controls" style="display:none">
+      <button type="button" onclick="returnToQuizStart()" class="finish-test-btn">⏹ Завершить тест</button>
+    </div>
+
+  
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Настройки проекта Supabase: заполните URL и anon key из Project Settings → API.
+        const SUPABASE_URL = "https://xohsuuippurcrfblhvrw.supabase.co";
+        const SUPABASE_ANON_KEY = "sb_publishable_GW5eK1MgYA7GaCJI1dVCbQ_nfLrWmNb";
+        let supabaseClient = null;
+        function getSupabase() {
+          if (!window.supabase || SUPABASE_URL.startsWith("ВСТАВЬТЕ_") || SUPABASE_ANON_KEY.startsWith("ВСТАВЬТЕ_")) throw new Error("Сначала настройте SUPABASE_URL и SUPABASE_ANON_KEY в index.html (см. README).");
+          if (!supabaseClient) supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+          return supabaseClient;
+        }
+
+        // Постоянный идентификатор этого браузера: сервер привязывает к нему код доступа.
+        function getDeviceId() {
+          const storageKey = "ptb_device_id";
+          try {
+            let id = localStorage.getItem(storageKey);
+            if (!id) {
+              id = Array.from(crypto.getRandomValues(new Uint8Array(16)), x => x.toString(16).padStart(2, "0")).join("");
+              localStorage.setItem(storageKey, id);
+            }
+            return id;
+          } catch (e) {
+            throw new Error("Браузер не даёт сохранить данные устройства. Отключите приватный режим и попробуйте снова.");
+          }
+        }
+
+        let activeQuizCategory = null;
+        let activeAccessKey = null;
+        let questionDatabase = null;
+        async function checkPassword() {
+          const key = document.getElementById("password").value.trim();
+          const message = document.getElementById("message");
+          const categoryMessage = document.getElementById("categoryMessage");
+          const selectedCategory = document.querySelector('input[name="category"]:checked');
+          message.style.display = "none";
+          if (!selectedCategory) { categoryMessage.style.display = "block"; return; }
+          categoryMessage.style.display = "none";
+          if (!key) { message.textContent = "Введите персональный ключ"; message.style.display = "block"; return; }
+          if (key === "123") {
+            const storageKey = "ptb_demo_uses";
+            let uses = Number(localStorage.getItem(storageKey) || 0);
+            if (uses >= 5) { message.textContent = "Пробный код 123 уже использован 5 раз."; message.style.display = "block"; return; }
+            localStorage.setItem(storageKey, String(uses + 1));
+            const demoQ = { id: "demo-123", question: "Что следует сделать при обнаружении подозрительного предмета?", answers: ["Не трогать предмет и сообщить ответственным лицам", "Самостоятельно переместить предмет", "Оставить без внимания", "Попытаться открыть предмет"], multiple: false };
+            activeQuizCategory = "demo"; activeAccessKey = "123";
+            currentQuestionIndex = 0; userAnswers = []; incorrectAnswers = [];
+            document.querySelector(".password-container").style.display = "none";
+            const homeActions = document.getElementById("home-admin-controls"); if (homeActions) homeActions.style.display = "none";
+            const bottomActions = document.getElementById("home-bottom-actions"); if (bottomActions) bottomActions.style.display = "none";
+            document.getElementById("quiz").style.display = "block";
+            document.getElementById("quiz-container").style.display = "block";
+            document.getElementById("quiz-action-controls").style.display = "flex";
+            displayQuiz(Array.from({length:5}, (_,i)=>({...demoQ,id:"demo-123-"+i})));
+            return;
+          }
+          try {
+            const { data, error } = await getSupabase().rpc("get_quiz_questions", { p_key: key, p_category: selectedCategory.value, p_device_id: getDeviceId() });
+            if (error) throw error;
+            const payload = data || {};
+            if (!payload.valid) { message.textContent = payload.message || "Ключ недействителен или нет доступа к категории"; message.style.display = "block"; return; }
+            const selectedQuestions = payload.questions || [];
+            if (!selectedQuestions.length) {
+              document.querySelector(".password-container").style.display = "none";
+              const adminControls = document.getElementById("home-admin-controls");
+              if (adminControls) adminControls.style.display = "none";
+              const bottomActionsEmpty = document.getElementById("home-bottom-actions"); if (bottomActionsEmpty) bottomActionsEmpty.style.display = "none";
+              const quizContainer = document.getElementById("quiz-container");
+              quizContainer.style.display = "block";
+              document.getElementById("quiz-action-controls").style.display = "flex";
+              quizContainer.innerHTML = "";
+              const heading = document.createElement("h2"); heading.textContent = payload.category_name || selectedCategory.parentElement.textContent.trim();
+              const note = document.createElement("p"); note.style.color = "#444"; note.textContent = "Пока вопросов в этой категории нет. Они появятся здесь, когда будут добавлены.";
+              const back = document.createElement("button"); back.type = "button"; back.textContent = "Вернуться к категориям"; back.onclick = () => location.reload();
+              quizContainer.append(heading, note, back); return;
+            }
+            activeQuizCategory = selectedCategory.value; activeAccessKey = key;
+            authorizedCategories = payload.categories || [];
+            currentQuestionIndex = 0; userAnswers = []; incorrectAnswers = [];
+            document.querySelector(".password-container").style.display = "none";
+            const adminControls = document.getElementById("home-admin-controls"); if (adminControls) adminControls.style.display = "none";
+            const bottomActionsQuiz = document.getElementById("home-bottom-actions"); if (bottomActionsQuiz) bottomActionsQuiz.style.display = "none";
+            document.getElementById("quiz").style.display = "block";
+            document.getElementById("quiz-container").style.display = "block";
+            document.getElementById("quiz-action-controls").style.display = "flex";
+            displayQuiz(shuffle([...selectedQuestions]));
+          } catch (err) {
+            const errorText = String(err?.message || err || "");
+            const isNetworkError = /load failed|failed to fetch|networkerror|network request failed|fetch failed/i.test(errorText) || err instanceof TypeError;
+            message.textContent = isNetworkError ? "Проверьте подключение к интернету и попробуйте ещё раз." : (errorText || "Не удалось получить вопросы. Попробуйте снова.");
+            message.style.display = "block";
+          }
+        }
+
+        function shuffle(array) {
+          for (let i = array.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [array[i], array[j]] = [array[j], array[i]]; }
+          return array;
+        }
+
+        function toggleAdminPanel() {
+          const p = document.getElementById("admin-panel"); p.style.display = p.style.display === "none" ? "block" : "none";
+        }
+        function adminMessage(text) { document.getElementById("admin-status").textContent = text; }
+        async function adminSignIn() {
+          try {
+            const { data, error } = await getSupabase().auth.signInWithPassword({ email: document.getElementById("admin-email").value.trim(), password: document.getElementById("admin-password").value });
+            if (error) throw error;
+            const { data: admin, error: adminError } = await getSupabase().from("admins").select("user_id").eq("user_id", data.user.id).maybeSingle();
+            if (adminError || !admin) { await getSupabase().auth.signOut(); throw new Error("У этой учетной записи нет прав администратора."); }
+            document.getElementById("admin-login").style.display = "none";
+            document.getElementById("admin-workspace").style.display = "block";
+            await loadSiteVisitCount();
+            await loadAccessKeys();
+          } catch (e) { adminMessage(e.message); }
+        }
+        async function adminSignOut() {
+          await getSupabase().auth.signOut();
+          document.getElementById("admin-login").style.display = "block";
+          document.getElementById("admin-workspace").style.display = "none";
+        }
+        function setExpiryMinimum() {
+          const field = document.getElementById("new-key-expiry");
+          if (!field) return;
+          const now = new Date();
+          now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+          field.min = now.toISOString().slice(0, 16);
+        }
+        if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", setExpiryMinimum);
+        else setExpiryMinimum();
+
+        function makeKey() { return "TB-" + Array.from(crypto.getRandomValues(new Uint8Array(6))).map(x => x.toString(16).padStart(2,"0")).join("").toUpperCase(); }
+        async function createAccessKey() {
+          try {
+            const person = document.getElementById("new-key-person").value.trim();
+            const key = document.getElementById("new-key-value").value.trim() || makeKey();
+            const expiry = document.getElementById("new-key-expiry").value;
+            const categories = [...document.querySelectorAll(".new-key-category:checked")].map(x => x.value);
+            if (!person || !expiry || !categories.length) throw new Error("Укажите сотрудника, срок действия и хотя бы одну категорию.");
+            const expiryDate = new Date(expiry);
+            if (Number.isNaN(expiryDate.getTime()) || expiryDate.getTime() <= Date.now()) {
+              throw new Error("Нельзя установить прошедшую дату. Срок действия ключа должен быть в будущем.");
+            }
+            const { error } = await getSupabase().from("access_keys").insert({ person_name: person, key_value: key, expires_at: expiryDate.toISOString(), categories, is_active: true });
+            if (error) throw error;
+            document.getElementById("new-key-person").value = ""; document.getElementById("new-key-value").value = "";
+            adminMessage("Ключ создан: " + key);
+            await loadAccessKeys();
+          } catch (e) { adminMessage(e.message); }
+        }
+        async function loadAccessKeys() {
+          const { data, error } = await getSupabase().from("access_keys").select("id,person_name,key_value,expires_at,categories,is_active,device_bound_at").order("created_at", {ascending:false});
+          if (error) { adminMessage(error.message); return; }
+          const labels = {questionsCategory1:"1 категория",category2:"2 категория",category3:"3 категория",questions:"4 категория",questions2:"5 категория",category6:"6 категория",questions1:"7 категория"};
+          const body = document.getElementById("keys-list"); body.replaceChildren();
+          data.forEach(k => {
+            const tr = document.createElement("tr");
+            const values = [k.person_name,k.key_value,new Date(k.expires_at).toLocaleString(),(k.categories||[]).map(c=>labels[c]||c).join(", "),k.is_active && new Date(k.expires_at)>new Date()?"Активен": "Не действует",k.device_bound_at?"Привязан "+new Date(k.device_bound_at).toLocaleString():"Не привязан"];
+            values.forEach(v => { const td=document.createElement("td"); td.textContent=v; tr.appendChild(td); });
+            const td=document.createElement("td"); const b=document.createElement("button"); b.textContent=k.is_active?"Заблокировать":"Включить"; b.onclick=()=>setKeyActive(k.id,!k.is_active); td.appendChild(b);
+            const d=document.createElement("button"); d.textContent="Удалить"; d.style.marginLeft="5px"; d.onclick=()=>deleteAccessKey(k.id); td.appendChild(d);
+            if (k.device_bound_at) { const u=document.createElement("button"); u.textContent="Отвязать устройство"; u.style.marginLeft="5px"; u.onclick=()=>resetKeyDevice(k.id); td.appendChild(u); }
+            tr.appendChild(td); body.appendChild(tr);
+          });
+        }
+        async function setKeyActive(id, active) { const {error}=await getSupabase().from("access_keys").update({is_active:active}).eq("id",id); if(error) adminMessage(error.message); else await loadAccessKeys(); }
+        async function resetKeyDevice(id) { if(!confirm("Отвязать устройство? Код привяжется к тому устройству, на котором его введут следующим.")) return; const {error}=await getSupabase().from("access_keys").update({device_hash:null,device_bound_at:null}).eq("id",id); if(error) adminMessage(error.message); else { adminMessage("Устройство отвязано."); await loadAccessKeys(); } }
+        async function deleteAccessKey(id) { if(!confirm("Удалить этот ключ?")) return; const {error}=await getSupabase().from("access_keys").delete().eq("id",id); if(error) adminMessage(error.message); else await loadAccessKeys(); }
+
+
+        let questionDbImportPayload = null;
+        const questionDbExpectedCategories = ["questionsCategory1","category2","category3","questions","questions2","category6","questions1"];
+        function validateQuestionDbPayload(payload) {
+          const errors=[]; const cats=payload?.categories;
+          if (!cats || typeof cats !== "object" || Array.isArray(cats)) errors.push("В JSON должен быть объект categories.");
+          if (!cats || errors.length) return {errors,stats:null};
+          let total=0, empty=0; const categoryCount=Object.keys(cats).length;
+          for (const [key,cat] of Object.entries(cats)) {
+            if (!key.trim()) errors.push("Есть категория без ключа.");
+            if (!cat || typeof cat.name !== "string" || !cat.name.trim()) errors.push(`Категория ${key}: нет названия.`);
+            if (!Array.isArray(cat.questions)) {errors.push(`Категория ${key}: questions должен быть массивом.`); continue;}
+            if (!cat.questions.length) empty++;
+            cat.questions.forEach((q,i)=>{
+              const prefix=`${key}, вопрос ${i+1}`;
+              if (!q || typeof q.question!=="string" || !q.question.trim()) errors.push(`${prefix}: пустой текст.`);
+              if (!Array.isArray(q.answers) || q.answers.length<2 || q.answers.some(a=>typeof a!=="string"||!a.trim())) errors.push(`${prefix}: нужны минимум 2 непустых варианта answers.`);
+              const correct=Array.isArray(q.correctAnswer)?q.correctAnswer:[q.correctAnswer];
+              if (!Array.isArray(q.answers) || !correct.length || correct.some(a=>!q.answers.includes(a))) errors.push(`${prefix}: correctAnswer не совпадает с вариантами answers.`);
+              total++;
+            });
+          }
+          const absent=questionDbExpectedCategories.filter(k=>!(k in cats));
+          const extra=Object.keys(cats).filter(k=>!questionDbExpectedCategories.includes(k));
+          if(absent.length) errors.push("Отсутствуют категории: "+absent.join(", "));
+          if(extra.length) errors.push("Неизвестные категории: "+extra.join(", "));
+          return {errors,stats:{categoryCount,total,empty}};
+        }
+        async function previewQuestionDb() {
+          const file=document.getElementById("question-db-file").files?.[0]; const box=document.getElementById("question-db-preview");
+          const btn=document.getElementById("question-db-import-btn"); btn.disabled=true; questionDbImportPayload=null;
+          if(!file){box.textContent="Сначала выбери JSON-файл.";return;}
+          try {
+            const payload=JSON.parse(await file.text()); const result=validateQuestionDbPayload(payload);
+            if(result.errors.length){box.textContent=`Проверка не пройдена:\n• ${result.errors.join("\n• ")}`;return;}
+            questionDbImportPayload=payload; const st=result.stats;
+            box.textContent=`Проверка успешно пройдена.
+Категорий: ${st.categoryCount}
+Вопросов: ${st.total}
+Пустых категорий: ${st.empty}
+
+Импорт заменит текущую базу целиком.`;
+            btn.disabled=false;
+          } catch(e){box.textContent="Ошибка чтения JSON: "+e.message;}
+        }
+        async function importQuestionDb() {
+          const btn=document.getElementById("question-db-import-btn");
+          const box=document.getElementById("question-db-preview");
+          if(!questionDbImportPayload) { box.textContent="Нет проверенного JSON в памяти. Выбери файл и нажми «Проверить файл» заново."; return; }
+          const validation=validateQuestionDbPayload(questionDbImportPayload);
+          if(validation.errors.length) { box.textContent="Проверка не пройдена:\n"+validation.errors.join("\n"); return; }
+          const stats=validation.stats;
+          btn.disabled=true; btn.textContent="Импорт выполняется…";
+          box.textContent=`Запрос импорта запущен. Отправляем ${stats.total} вопросов в ${stats.categoryCount} категорий…`;
+          try {
+            const {data,error}=await getSupabase().rpc("admin_import_quiz_json",{p_payload:questionDbImportPayload});
+            if(error) throw error;
+            box.textContent=`Импорт завершён успешно!\nКатегорий: ${data.categories}\nВопросов: ${data.questions}\nПустых категорий: ${data.empty_categories}\nБаза заменена.`;
+            questionDbImportPayload=null; document.getElementById("question-db-file").value="";
+          } catch(e){
+            box.textContent=`Импорт НЕ выполнен. Ошибка сервера: ${e.message||e}\nСуществующая база не должна быть изменена.`;
+          } finally { btn.disabled=false; btn.textContent="Заменить базу вопросами из файла"; }
+        }
+        async function exportQuestionDb() {
+          const box=document.getElementById("question-db-preview"); box.textContent="Формирование экспорта…";
+          try {
+            const {data,error}=await getSupabase().rpc("admin_export_quiz_json"); if(error) throw error;
+            const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+            const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="questions-backup-"+new Date().toISOString().slice(0,10)+".json"; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+            box.textContent="Резервная копия скачана. Храни её в безопасном месте: JSON содержит правильные ответы.";
+          } catch(e){box.textContent="Экспорт не выполнен: "+(e.message||e);}
+        }
+
+let currentQuestionIndex = 0; // Текущий индекс вопроса
+let userAnswers = []; // Массив ответов пользователя
+let incorrectAnswers = []; // Массив неправильных ответов
+
+async function displayQuiz(selectedQuestions) {
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = "";
+    document.body.classList.remove("answer-correct", "answer-incorrect");
+    document.body.classList.add("quiz-neutral");
+    const counter = document.createElement("div");
+    counter.className = "quiz-progress-label";
+    counter.textContent = `Вопрос ${currentQuestionIndex + 1} из ${selectedQuestions.length}`;
+    container.appendChild(counter);
+    const progress = document.createElement("div"); progress.className = "quiz-progress-track";
+    const progressFill = document.createElement("div"); progressFill.className = "quiz-progress-fill";
+    progressFill.style.width = `${Math.min(100, currentQuestionIndex / Math.max(1, selectedQuestions.length) * 100)}%`;
+    progress.appendChild(progressFill); container.appendChild(progress);
+    if (currentQuestionIndex >= selectedQuestions.length) { showResults(); return; }
+    const q = selectedQuestions[currentQuestionIndex];
+    const questionElement = document.createElement("div");
+    const questionTitle = document.createElement("h2"); questionTitle.textContent = q.question;
+    questionElement.appendChild(questionTitle);
+    const inputType = q.multiple ? "checkbox" : "radio";
+    (q.answers || []).forEach(answer => {
+      const label = document.createElement("label"); label.className = "answer-option";
+      const input = document.createElement("input"); input.type = inputType; input.name = "answer"; input.value = answer;
+      label.appendChild(input); label.appendChild(document.createTextNode(" " + answer)); questionElement.appendChild(label);
+    });
+    container.appendChild(questionElement);
+    const inputs = [...questionElement.querySelectorAll('input[name="answer"]')];
+    let answered = false;
+    const submitAnswer = async (selected) => {
+      if (answered) return; answered = true;
+      inputs.forEach(input => input.disabled = true);
+      if (inputType === "checkbox") confirmButton.disabled = true;
+      let data, error;
+      if (activeAccessKey === "123" && activeQuizCategory === "demo") {
+        const correct = "Не трогать предмет и сообщить ответственным лицам";
+        data = { valid: true, correct_answers: [correct], is_correct: selected.length === 1 && selected[0] === correct };
+      } else {
+        ({ data, error } = await getSupabase().rpc("submit_quiz_answer", {
+          p_key: activeAccessKey, p_category: activeQuizCategory, p_question_id: q.id, p_selected: selected, p_device_id: getDeviceId()
+        }));
+      }
+      if (error || !data?.valid) {
+        document.body.classList.remove("quiz-neutral"); document.body.classList.add("answer-incorrect");
+        container.insertAdjacentHTML("beforeend", `<p class="error">${escapeQuizText(error?.message || data?.message || "Не удалось проверить ответ")}</p>`);
+        return;
+      }
+      const correct = data.correct_answers || [];
+      userAnswers[currentQuestionIndex] = selected;
+      const isCorrect = !!data.is_correct;
+      document.body.classList.remove("answer-correct", "answer-incorrect", "quiz-neutral");
+      document.body.classList.add(isCorrect ? "answer-correct" : "answer-incorrect");
+      if (!isCorrect) incorrectAnswers.push({ question: q.question, selected, correct });
+      const feedback = document.createElement("p");
+      feedback.textContent = isCorrect ? "Правильно!" : `Неправильно. Правильный ответ: ${correct.join("; ")}`;
+      container.appendChild(feedback);
+      setTimeout(() => { currentQuestionIndex++; displayQuiz(selectedQuestions); }, 1100);
+    };
+    let confirmButton = null;
+    if (inputType === "radio") inputs.forEach(input => input.addEventListener("change", () => submitAnswer([input.value])));
+    else {
+      confirmButton = document.createElement("button"); confirmButton.type = "button"; confirmButton.className = "submit-password"; confirmButton.textContent = "Ответить"; confirmButton.disabled = true;
+      inputs.forEach(input => input.addEventListener("change", () => { confirmButton.disabled = inputs.filter(x => x.checked).length === 0; }));
+      confirmButton.addEventListener("click", () => submitAnswer(inputs.filter(x => x.checked).map(x => x.value)));
+      container.appendChild(confirmButton);
+    }
+}
+function escapeQuizText(value) { const div=document.createElement("div"); div.textContent=String(value); return div.innerHTML; }
+
+function showResults() {
+    document.getElementById("quiz-action-controls").style.display = "none";
+    const container = document.getElementById("quiz-container");
+    container.innerHTML = "";
+    document.body.classList.remove("answer-correct", "answer-incorrect");
+    document.body.classList.add("quiz-neutral");
+    const total = userAnswers.filter(a => a !== undefined).length;
+    const wrong = incorrectAnswers.length;
+    const correctCount = Math.max(0, total - wrong);
+    const percent = total ? Math.round(correctCount / total * 100) : 0;
+    const resultsMessage = document.createElement("div"); resultsMessage.className = "quiz-results-card";
+    resultsMessage.innerHTML = `<h1>Результаты теста</h1><div class="quiz-score">${percent}%</div><p><strong>Правильных ответов:</strong> ${correctCount} из ${total}</p><p><strong>Ошибок:</strong> ${wrong}</p>`;
+    if (wrong > 0) {
+      const list = document.createElement("div"); list.className = "quiz-mistakes";
+      const heading = document.createElement("h2"); heading.textContent = "Разбор ошибок"; list.appendChild(heading);
+      incorrectAnswers.forEach((item, index) => {
+        const card = document.createElement("div"); card.className = "quiz-mistake-item";
+        const q = document.createElement("p"); q.innerHTML = `<strong>${index + 1}. Вопрос:</strong> ${escapeQuizText(item.question)}`;
+        const your = document.createElement("p"); your.innerHTML = `<span class="quiz-your-answer">Ваш ответ:</span> ${escapeQuizText((item.selected || []).join("; "))}`;
+        const right = document.createElement("p"); right.innerHTML = `<span class="quiz-correct-answer">Правильный ответ:</span> ${escapeQuizText((item.correct || []).join("; "))}`;
+        card.append(q,your,right); list.appendChild(card);
+      }); resultsMessage.appendChild(list);
+    } else {
+      const congrat = document.createElement("p"); congrat.className = "quiz-congratulations"; congrat.textContent = "Отлично! Все ответы правильные — так держать!"; resultsMessage.appendChild(congrat);
+    }
+    const actions = document.createElement("div"); actions.className = "quiz-result-actions";
+    const home = document.createElement("button"); home.className = "submit-password"; home.type = "button"; home.textContent = "↩ Вернуться к началу";
+    home.addEventListener("click", returnToQuizStart);
+    actions.appendChild(home); resultsMessage.appendChild(actions); container.appendChild(resultsMessage);
+}
+
+
+
+    // Регистрация уникального посетителя в общей базе Supabase.
+    async function registerSiteVisit() {
+      try {
+        const storageKey = "transport_security_visitor_id";
+        let visitorId = localStorage.getItem(storageKey);
+        if (!visitorId) {
+          visitorId = (crypto.randomUUID ? crypto.randomUUID() :
+            "v-" + Date.now() + "-" + Math.random().toString(36).slice(2));
+          localStorage.setItem(storageKey, visitorId);
+        }
+        const { error } = await getSupabase().rpc("register_site_visit", { p_visitor_id: visitorId });
+        if (error) console.error("Не удалось зарегистрировать посещение:", error.message);
+      } catch (error) { console.error("Счётчик посещений недоступен:", error); }
+    }
+
+    async function loadSiteVisitCount() {
+      const target = document.getElementById("site-visit-count");
+      if (!target) return;
+      target.textContent = "Загрузка...";
+      try {
+        const { data, error } = await getSupabase().rpc("get_site_visit_count");
+        if (error) throw error;
+        target.textContent = Number(data).toLocaleString("ru-RU");
+      } catch (error) { target.textContent = "Ошибка загрузки: " + (error.message || error); }
+    }
+
+    registerSiteVisit();
+    </script>
+
+    <main>
+        <!-- Ваше основное содержимое здесь -->
+        <h1></h1>
+    </main>
+<style>
+.quiz-progress-label { margin: 8px 0; font-weight: 700; }
+.quiz-progress-track { height: 8px; background: #e2e8f0; border-radius: 99px; overflow: hidden; margin: 8px 0 18px; }
+.quiz-progress-fill { height: 100%; background: linear-gradient(90deg,#1e88e5,#18a86b); border-radius:99px; transition:width .25s; }
+.question-report-button { display:block; margin:18px auto 0; background:#fff3cd; color:#795500; border:1px solid #e8cf77; border-radius:9px; padding:10px 14px; cursor:pointer; font-weight:600; }
+.quiz-results-card { max-width:850px; margin:0 auto; padding:16px; }
+.quiz-score { font-size:clamp(2.5rem,8vw,4rem); font-weight:800; color:#16834b; text-align:center; margin:8px 0; }
+.quiz-mistakes h2 { margin-top:24px; }
+.quiz-mistake-item { background:rgba(255,255,255,.75); border:1px solid #d8e0e8; border-radius:10px; padding:12px; margin:12px 0; }
+.quiz-your-answer { color:#c62828; font-weight:700; } .quiz-correct-answer { color:#16834b; font-weight:700; }
+.quiz-result-actions { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin:22px 0 8px; }
+.quiz-congratulations { padding:14px; background:#e7f7ed; border-radius:10px; color:#176b3b; font-weight:700; }
+.feedback-area { max-width:720px; margin:28px auto 10px; padding:18px; border:1px solid #dce4ec; border-radius:14px; background:rgba(255,255,255,.7); text-align:left; }
+.feedback-area h2 { margin-top:0; } .feedback-area label { display:block; margin:8px 0; }
+.feedback-area textarea { width:100%; box-sizing:border-box; min-height:100px; padding:10px; border-radius:8px; border:1px solid #cbd5e1; font:inherit; }
+.feedback-area select { padding:8px; border-radius:8px; } .feedback-area button { margin-top:10px; }
+@media(max-width:600px){ .quiz-result-actions button{width:100%;} .quiz-results-card{padding:8px;} }
+</style>
+<section class="feedback-area" id="feedback-area" hidden>
+<div class="feedback-modal-card" role="dialog" aria-modal="true" aria-labelledby="feedback-title">
+
+<h2 id="feedback-title">💬 Обратная связь</h2><button type="button" class="feedback-close" onclick="toggleFeedback(false)" aria-label="Закрыть блок обратной связи">✕ Закрыть</button><p>Оцените тренажёр или напишите, что стоит улучшить.</p>
+<label for="feedback-rating">Оценка:</label><select id="feedback-rating"><option value="5">⭐⭐⭐⭐⭐ — Отлично</option><option value="4">⭐⭐⭐⭐ — Хорошо</option><option value="3">⭐⭐⭐ — Нормально</option><option value="2">⭐⭐ — Есть проблемы</option><option value="1">⭐ — Не понравилось</option></select>
+<label for="feedback-text">Комментарий (необязательно):</label><textarea id="feedback-text" placeholder="Ваши пожелания, идеи или замечания"></textarea>
+<button type="button" class="submit-password" id="feedback-send">Отправить отзыв</button>
+<div id="feedback-send-options" class="feedback-send-options" hidden>
+  <p>Как отправить отзыв?</p>
+  <button type="button" id="feedback-email">✉️ Почтовое приложение</button>
+  <button type="button" id="feedback-share">📤 Поделиться через приложение…</button>
+  <button type="button" id="feedback-copy">📋 Скопировать текст отзыва</button>
+</div>
+<p id="feedback-status" role="status"></p>
+
+</div>
+</section>
+<script>
+function toggleFeedback(show){
+ const panel=document.getElementById('feedback-area'); if(!panel)return;
+ const shouldShow = show === undefined ? panel.hidden : !!show;
+ panel.hidden = !shouldShow;
+ document.body.classList.toggle('feedback-modal-open', shouldShow);
+ if(shouldShow){ const t=document.getElementById('feedback-text'); if(t)t.focus({preventScroll:true}); }
+}
+
+document.addEventListener('click',function(e){const modal=document.getElementById('feedback-area'); if(modal && !modal.hidden && e.target===modal) toggleFeedback(false);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){const modal=document.getElementById('feedback-area'); if(modal && !modal.hidden) toggleFeedback(false);}});
+async function shareApp(){
+ const shareData={title:"Учебный тренажёр по транспортной безопасности",text:"Пройдите учебный тест по транспортной безопасности морского и водного транспорта.",url:location.href};
+ if(navigator.share){try{await navigator.share(shareData);return;}catch(e){if(e.name==="AbortError")return;}}
+ try{await navigator.clipboard.writeText(shareData.url);alert("Ссылка на приложение скопирована.");}catch(e){prompt("Скопируйте ссылку на приложение:",shareData.url);}
+}
+function returnToQuizStart(){
+ document.getElementById('quiz').style.display='none';
+ document.getElementById('quiz-container').style.display='none';
+ document.getElementById('quiz-action-controls').style.display='none';
+ const home=document.querySelector('.password-container'); if(home)home.style.display='';
+ const adminControls=document.getElementById('home-admin-controls'); if(adminControls)adminControls.style.display='';
+ const bottomActions=document.getElementById('home-bottom-actions'); if(bottomActions)bottomActions.style.display='';
+ document.body.classList.remove('answer-correct','answer-incorrect','quiz-neutral');
+ document.getElementById('feedback-area').hidden=true;
+}
+(function(){
+ const send=document.getElementById('feedback-send'); if(!send)return;
+ const options=document.getElementById('feedback-send-options');
+ let payload={subject:'',body:''};
+ function makePayload(){ const rating=document.getElementById('feedback-rating').value; const comment=document.getElementById('feedback-text').value.trim();
+  payload.subject='Отзыв о тренажёре «Транспортная безопасность»';
+  payload.body=`Оценка: ${rating}/5\nКомментарий: ${comment || '(без комментария)'}\nДата: ${new Date().toLocaleString('ru-RU')}\nИсточник: тренажёр по транспортной безопасности`;
+ }
+ send.addEventListener('click',()=>{makePayload(); options.hidden=false; document.getElementById('feedback-status').textContent='Выберите способ отправки. В письме можно будет проверить получателя и текст перед отправкой.';});
+ document.getElementById('feedback-email').addEventListener('click',()=>{makePayload(); const subject=encodeURIComponent(payload.subject), body=encodeURIComponent(payload.body); location.href=`mailto:wlad280@mail.ru?subject=${subject}&body=${body}`; document.getElementById('feedback-status').textContent='Почтовое приложение откроет черновик письма. Проверьте его и нажмите «Отправить».';});
+ document.getElementById('feedback-share').addEventListener('click',async()=>{makePayload(); if(navigator.share){try{await navigator.share({title:payload.subject,text:payload.body}); document.getElementById('feedback-status').textContent='Открыто меню «Поделиться».';}catch(e){if(e.name!=='AbortError')document.getElementById('feedback-status').textContent='Не удалось открыть меню «Поделиться». Попробуйте отправку через почту.';}}else{document.getElementById('feedback-status').textContent='На этом устройстве меню «Поделиться» не поддерживается. Используйте почту или копирование.';}});
+ document.getElementById('feedback-copy').addEventListener('click',async()=>{makePayload(); try{await navigator.clipboard.writeText(payload.subject+'\n\n'+payload.body); document.getElementById('feedback-status').textContent='Текст отзыва скопирован. Вставьте его в любое приложение.';}catch(e){document.getElementById('feedback-status').textContent=payload.subject+'\n\n'+payload.body;}});
+})();
+</script>
+
+
+<style id="modern-responsive-refresh">
+  :root { color-scheme: light; --navy:#123654; --blue:#1677c8; --ink:#172b3e; --surface:#fff; --border:#dce6ef; }
+  body { background: radial-gradient(ellipse at 12% 4%, #b8d5ee 0, transparent 38%), linear-gradient(145deg,#d4e1ef,#b9cadd 48%,#a5bad0) !important; color:var(--ink); }
+  main { width:100%; }
+  .password-container, .quiz-container, #admin-panel, .feedback-area { border:1px solid rgba(209,224,237,.9) !important; border-radius:18px !important; box-shadow:0 14px 38px rgba(18,54,84,.12) !important; background:rgba(255,255,255,.96) !important; }
+  .password-container { width:min(100%,680px); margin:clamp(10px,4vh,42px) auto 16px; padding:clamp(16px,4vw,34px); }
+  .animated-text { font-size:clamp(20px,3vw,30px) !important; line-height:1.35; margin:0 0 20px !important; text-align:center; background:linear-gradient(120deg,#123654,#1677c8,#139b83); background-size:200%; -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+  .logo { max-width:clamp(76px,15vw,132px) !important; }
+  .category-item { border-radius:12px; border-color:var(--border); background:#f8fbfe; min-height:48px; transition:background .15s,border-color .15s; }
+  .category-item:hover { background:#eef7ff; border-color:#8abde7; }
+  .quiz-container { width:min(100%,900px) !important; margin:clamp(8px,2vh,20px) auto !important; padding:clamp(14px,3vw,30px) !important; }
+  #quiz-container .answer-option { border-radius:12px; box-shadow:0 2px 8px rgba(20,55,85,.035); transition:border-color .15s,background .15s; }
+  #quiz-container .answer-option:hover { border-color:#9bc8e8; }
+  button, .submit, .submit-password { border-radius:10px !important; min-height:46px; }
+  #admin-panel { max-width:760px; padding:clamp(12px,2.5vw,22px); }
+  .feedback-area { width:min(100%,720px); }
+  .feedback-send-options { margin-top:12px; padding:12px; background:#edf4fb; border:1px solid #d3e2f0; border-radius:14px; display:flex; flex-wrap:wrap; gap:9px; }
+  .feedback-send-options[hidden] { display:none !important; }
+  .feedback-send-options p { width:100%; margin:0 0 4px; font-weight:600; color:#244762; }
+  .feedback-send-options button { background:#fff; border:1px solid #bfd3e5; color:#1c4c70; padding:10px 13px; cursor:pointer; }
+  .feedback-send-options button:hover { background:#e2f0fc; }
+  footer, .site-footer, .footer-brand { display:none !important; }
+  @media(max-width:600px) {
+    body { padding:7px !important; }
+    .password-container { margin:8px auto 12px; padding:14px; border-radius:14px !important; }
+    .animated-text { font-size:18px !important; margin-bottom:14px !important; }
+    .quiz-container { padding:12px !important; border-radius:14px !important; }
+    .category-item { padding:10px 11px; font-size:15px; }
+    #quiz-container .answer-option { padding:11px 10px; gap:9px; font-size:15px; }
+    .feedback-area { padding:13px; margin:18px auto 8px; }
+    .feedback-send-options { flex-direction:column; }
+    .feedback-send-options button { width:100%; text-align:left; }
+    button, .submit, .submit-password { width:auto; max-width:100%; padding:11px 15px; }
+    .quiz-result-actions button { width:100%; }
+  }
+
+  /* Feedback form as a modal overlay */
+  #feedback-area.feedback-area { position:fixed !important; inset:0 !important; z-index:10000 !important; width:100vw !important; height:100dvh !important; max-width:none !important; margin:0 !important; padding:20px !important; box-sizing:border-box !important; display:flex !important; align-items:center !important; justify-content:center !important; overflow:auto !important; background:rgba(12,28,45,.62) !important; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px); border:0 !important; border-radius:0 !important; box-shadow:none !important; }
+  #feedback-area[hidden] { display:none !important; }
+  .feedback-modal-card { position:relative; width:min(100%,560px); max-height:calc(100dvh - 40px); overflow-y:auto; overscroll-behavior:contain; padding:clamp(18px,4vw,28px); box-sizing:border-box; border-radius:22px; background:#fff; color:#172b3e; box-shadow:0 24px 70px rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.7); }
+  .feedback-modal-card h2 { margin:0 0 12px; }
+  .feedback-modal-card .feedback-close { float:right; margin:0 0 12px 12px; min-height:42px; }
+  body.feedback-modal-open { overflow:hidden; }
+  @media(max-width:600px){ #feedback-area.feedback-area { padding:12px !important; } .feedback-modal-card { max-height:calc(100dvh - 24px); border-radius:18px; padding:16px; } }
+
+  /* PWA-friendly compact admin + bottom action bar */
+  .admin-mini { position:absolute; top:10px; right:10px; z-index:3; width:36px; height:36px; min-height:36px; padding:0; border:1px solid transparent; border-radius:50%; background:transparent !important; color:rgba(76,105,128,.25); font-size:15px; opacity:.55; cursor:pointer; box-shadow:none !important; }
+  .admin-mini:hover, .admin-mini:focus-visible { opacity:1; background:rgba(219,234,246,.35) !important; border-color:rgba(111,139,160,.12); color:rgba(76,105,128,.7); outline:2px solid rgba(111,139,160,.15); outline-offset:1px; }
+  #password-container { position:relative; padding-top:clamp(24px,4vw,40px); }
+  .home-action-buttons { justify-content:center !important; }
+  .app-bottom-actions { display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:10px; width:min(100%,680px); margin:18px auto 4px; }
+  .app-bottom-actions .app-action-btn,
+  .app-bottom-actions button,
+  .app-bottom-actions a.app-action-btn,
+  #quiz-action-controls .share-app-btn,
+  #quiz-action-controls button {
+    display:inline-flex; align-items:center; justify-content:center;
+    min-height:46px; padding:12px 18px; border:0; border-radius:13px;
+    color:#fff !important; font-weight:650; font-size:15px; line-height:1.3;
+    cursor:pointer; text-decoration:none; box-sizing:border-box;
+    background:linear-gradient(135deg,#17856d,#167c92);
+    box-shadow:0 5px 14px rgba(18,54,84,.18);
+    transition:filter .15s ease, transform .15s ease;
+  }
+  .app-bottom-actions .app-action-btn:hover,
+  .app-bottom-actions button:hover,
+  .app-bottom-actions a.app-action-btn:hover,
+  #quiz-action-controls button:hover {
+    filter:brightness(1.08);
+  }
+  .app-bottom-actions .share-app-btn { background:linear-gradient(135deg,#17856d,#167c92); }
+  .app-bottom-actions .telegram-btn { background:linear-gradient(135deg,#17856d,#167c92); }
+  .app-bottom-actions .feedback-trigger { background:linear-gradient(135deg,#17856d,#167c92); }
+  #quiz-action-controls { display:flex; justify-content:center; flex-wrap:wrap; gap:10px; margin:10px auto 18px; }
+  #quiz-action-controls button { min-height:46px; border-radius:13px; background:linear-gradient(135deg,#17856d,#167c92); color:#fff; border:0; font-weight:650; padding:12px 18px; cursor:pointer; }
+  @media(max-width:600px){
+    .app-bottom-actions { flex-direction:column; align-items:stretch; padding:0 5px; }
+    .app-bottom-actions .app-action-btn,
+    .app-bottom-actions button,
+    .app-bottom-actions a.app-action-btn { width:100%; }
+    .admin-mini { top:7px; right:7px; }
+    #quiz-action-controls { flex-direction:column; padding:0 5px; }
+    #quiz-action-controls button { width:100%; }
+  }
+</style>
+
+<script>
+async function shareApp(){
+ const appTitle='Учебный тренажёр по транспортной безопасности';
+ const appText='Учебный тренажёр по транспортной безопасности морского и водного транспорта';
+ const isHosted=location.protocol==='https:' || location.protocol==='http:';
+ const shareData=isHosted?{title:appTitle,text:appText,url:location.href}:{title:appTitle,text:appText+'\n\nПриложение будет доступно по ссылке после размещения на HTTPS-хостинге.'};
+ try { if(navigator.share){ await navigator.share(shareData); } else if(navigator.clipboard){ await navigator.clipboard.writeText(isHosted?location.href:appText); alert(isHosted?'Ссылка на приложение скопирована.':'Текст скопирован. После публикации добавим ссылку на приложение.'); } else { prompt('Скопируйте текст для отправки:',isHosted?location.href:appText); } }
+ catch(err){ if(err && err.name!=='AbortError') { try{await navigator.clipboard.writeText(isHosted?location.href:appText); alert(isHosted?'Ссылка скопирована.':'Текст скопирован.');}catch(e){prompt('Скопируйте:',isHosted?location.href:appText);} } }
+}
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) { window.addEventListener('load',()=>navigator.serviceWorker.register('./service-worker.js').catch(()=>{})); }
+</script>
+
+</body>
+</html>

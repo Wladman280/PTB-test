@@ -854,20 +854,23 @@ async function displayQuiz(selectedQuestions) {
         }));
       }
       if (error || !data?.valid) {
-        document.body.classList.remove("quiz-neutral"); document.body.classList.add("answer-incorrect");
         container.insertAdjacentHTML("beforeend", `<p class="error">${escapeQuizText(error?.message || data?.message || "Не удалось проверить ответ")}</p>`);
         return;
       }
       const correct = data.correct_answers || [];
       userAnswers[currentQuestionIndex] = selected;
       const isCorrect = !!data.is_correct;
-      document.body.classList.remove("answer-correct", "answer-incorrect", "quiz-neutral");
-      document.body.classList.add(isCorrect ? "answer-correct" : "answer-incorrect");
+      // Подсветка полей: правильные варианты — зелёные, ошибочно выбранные — красные
+      inputs.forEach(input => {
+        if (correct.includes(input.value)) input.parentElement.classList.add("is-correct");
+        else if (selected.includes(input.value)) input.parentElement.classList.add("is-incorrect");
+      });
       if (!isCorrect) incorrectAnswers.push({ question: q.question, selected, correct });
       const feedback = document.createElement("p");
+      feedback.className = isCorrect ? "quiz-correct-answer" : "quiz-your-answer";
       feedback.textContent = isCorrect ? "Правильно!" : `Неправильно. Правильный ответ: ${correct.join("; ")}`;
       container.appendChild(feedback);
-      setTimeout(() => { currentQuestionIndex++; displayQuiz(selectedQuestions); }, 1100);
+      setTimeout(() => { currentQuestionIndex++; displayQuiz(selectedQuestions); }, isCorrect ? 1100 : 2500);
     };
     let confirmButton = null;
     if (inputType === "radio") inputs.forEach(input => input.addEventListener("change", () => submitAnswer([input.value])));
@@ -1043,6 +1046,8 @@ function returnToQuizStart(){
   .logo { max-width:clamp(76px,15vw,132px) !important; }
   .category-item { border-radius:12px; border-color:var(--border); background:#f8fbfe; min-height:48px; transition:background .15s,border-color .15s; }
   .category-item:hover { background:#eef7ff; border-color:#8abde7; }
+  #quiz-container label.answer-option.is-correct { background:#b7efc5; border:2px solid #1e8e3e; }
+  #quiz-container label.answer-option.is-incorrect { background:#ffc4c4; border:2px solid #d32f2f; }
   .quiz-container { width:min(100%,900px) !important; margin:clamp(8px,2vh,20px) auto !important; padding:clamp(14px,3vw,30px) !important; }
   #quiz-container .answer-option { border-radius:12px; box-shadow:0 2px 8px rgba(20,55,85,.035); transition:border-color .15s,background .15s; }
   #quiz-container .answer-option:hover { border-color:#9bc8e8; }

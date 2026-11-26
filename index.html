@@ -518,6 +518,7 @@
           <h3 style="margin:0 0 8px">Посещаемость сайта</h3>
           <p style="margin:0">Уникальных посетителей: <strong id="site-visit-count">—</strong></p>
           <button type="button" onclick="loadSiteVisitCount()" style="margin-top:8px">Обновить счётчик</button>
+          <button type="button" onclick="resetSiteVisitCount()" style="margin-top:8px">Сбросить счётчик</button>
         </section>
         <section id="question-db-admin" style="margin:18px 0;padding:16px;border:1px solid #b8c9df;border-radius:10px;background:#f7faff;color:#172033">
           <h3 style="margin-top:0">Управление базой вопросов</h3>
@@ -932,10 +933,20 @@ function showResults() {
       if (!target) return;
       target.textContent = "Загрузка...";
       try {
-        const { data, error } = await getSupabase().rpc("get_site_visit_count");
+        const { data, error } = await getSupabase().rpc("get_site_visit_count_since_reset");
         if (error) throw error;
         target.textContent = Number(data).toLocaleString("ru-RU");
       } catch (error) { target.textContent = "Ошибка загрузки: " + (error.message || error); }
+    }
+
+    async function resetSiteVisitCount() {
+      if (!confirm("Сбросить счётчик посетителей до нуля?")) return;
+      try {
+        const { error } = await getSupabase().rpc("reset_site_visit_count");
+        if (error) throw error;
+        adminMessage("Счётчик сброшен.");
+        await loadSiteVisitCount();
+      } catch (error) { adminMessage("Не удалось сбросить счётчик: " + (error.message || error)); }
     }
 
     registerSiteVisit();
